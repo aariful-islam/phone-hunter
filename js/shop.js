@@ -7,8 +7,11 @@ const phoneList = (data) => {
     // search option
     const getSearchInputText = document.getElementById("searchInput");
     const getSearchInputValue = getSearchInputText.value;
+    // clear previos search 
     getSearchInputText.value = "";
+    document.getElementById("details").textContent='';
     if (getSearchInputValue == "") {
+        toggleSpinner('none')
         document.getElementById("phoneList").innerHTML = `<h5 class="text-center "> Please enter Phone Name...</h5>`;
     } else {
         fetch(`https://openapi.programming-hero.com/api/phones?search=${getSearchInputValue}`)
@@ -23,7 +26,7 @@ const ShowPhoneList = (phones) => {
     listOfPhones.textContent = "";
     // if no result found
     if (phones.length == 0) {
-        listOfPhones.innerHTML = `<h3 class="text-center"> No resul found...</h3>`;
+        listOfPhones.innerHTML = `<h3 class="text-center"> No result found...</h3>`;
     }
     phones.slice(0, 20).forEach((phone) => {
         const div = document.createElement("div");
@@ -63,6 +66,8 @@ const phoneDetails = (datas) => {
         .then((data) => showPhoneDetails(data.data));
 };
 
+// show Each phone details 
+
 const showPhoneDetails = (data) => {
     // console.log(data)
     const setPhoneDetails = document.getElementById("details");
@@ -70,13 +75,25 @@ const showPhoneDetails = (data) => {
 
     const div = document.createElement("div");
 
+
+    // handle others 
+
+    
+        
+                  
+        
+    
+
     //   img.innerText=${data.image}
     div.innerHTML = `
     <div class="card ps-5">
               <div class="text-center">
               <img  class="img-thumbnail w-10 h-10 mb-5" src="${data.image}" class="card-img-top" alt="...">
               </div>
-              <p><span class="fs-5 text fw-bold">Release Date: </span> ${data.mainFeatures.releaseDate ? data.mainFeatures.releaseDate : 'comming soon'} </p>
+              <h4>${data.name}</h4>
+
+        
+              <p><span class="fs-5 text fw-bold">Release Date: </span> ${data.releaseDate ? data.releaseDate : 'comming soon'} </p>
               
               <div>
               <h3> Main Features: </h3>
@@ -90,19 +107,51 @@ const showPhoneDetails = (data) => {
               
          
               </div>
-              <p><span class="fs-5 text fw-bold">Sensors: </span> ${data.mainFeatures.sensors ? data.mainFeatures.sensors : 'comming soon'} </p>
+              <p><span class="fs-5 text fw-bold">Sensors: </span> ${data.mainFeatures.sensors ? data.mainFeatures.sensors : 'Not found'} </p>
+
+            
+              <p> ${data.others ?` <div>
+              <h3>Others: </h3>
+                  <ul>
+                  <li> <span class="fs-5 text fw-bold">Bluetooth: </span> ${data.others.Bluetooth}</li>
+                  <li><span class="fs-5 text fw-bold">GPS: </span>  ${data.others.GPS}</li>
+                  <li><span class="fs-5 text fw-bold">NFC: </span> ${data.others.NFC}</li>
+                  <li><span class="fs-5 text fw-bold">Radio: </span> ${data.others.Radio}</li>
+                  <li><span class="fs-5 text fw-bold">USB: </span> ${data.others.USB}</li>
+                  <li><span class="fs-5 text fw-bold">WLAN: </span> ${data.others.WLAN}</li>
+                  
+                  </ul>` : ''} </p>
+             
+
+
+              
+
               
        </div>
 
 `;
 
+
+
+
     setPhoneDetails.appendChild(div);
 };
 
-// sipper
+// spinner
 const toggleSpinner = (displayStyle) => {
     document.getElementById("spinner").style.display = displayStyle;
 };
 const toggleSearchList = (displayStyle) => {
     document.getElementById("phoneList").style.display = displayStyle;
 };
+
+
+
+
+
+
+
+
+
+
+ 
