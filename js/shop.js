@@ -137,7 +137,7 @@ const showPhoneDetails = (data) => {
     setPhoneDetails.appendChild(div);
 };
 
-// spinner
+// for spinner
 const toggleSpinner = (displayStyle) => {
     document.getElementById("spinner").style.display = displayStyle;
 };
