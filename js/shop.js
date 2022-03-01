@@ -120,7 +120,7 @@ const showPhoneDetails = (data) => {
                   <li><span class="fs-5 text fw-bold">USB: </span> ${data.others.USB}</li>
                   <li><span class="fs-5 text fw-bold">WLAN: </span> ${data.others.WLAN}</li>
                   
-                  </ul>` : ''} </p>
+                  </ul>` : ' Others Not found'} </p>
              
 
 
