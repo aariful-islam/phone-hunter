@@ -1,16 +1,17 @@
 // get phonr list from api
 const phoneList = (data) => {
+    // spiner
+    toggleSpinner('block')
+
+    // toggleSearchList('none')
+    // search option
     const getSearchInputText = document.getElementById("searchInput");
     const getSearchInputValue = getSearchInputText.value;
     getSearchInputText.value = "";
     if (getSearchInputValue == "") {
-        document.getElementById(
-            "phoneList"
-        ).innerHTML = `<h5 class="text-center "> Please enter Phone Name...</h5>`;
+        document.getElementById("phoneList").innerHTML = `<h5 class="text-center "> Please enter Phone Name...</h5>`;
     } else {
-        fetch(
-            `https://openapi.programming-hero.com/api/phones?search=${getSearchInputValue}`
-        )
+        fetch(`https://openapi.programming-hero.com/api/phones?search=${getSearchInputValue}`)
             .then((res) => res.json())
             .then((data) => ShowPhoneList(data.data));
     }
@@ -48,7 +49,11 @@ const ShowPhoneList = (phones) => {
     `;
         listOfPhones.appendChild(div);
     });
+    toggleSpinner("none");
+    //   toggleSearchList('block')
 };
+
+// show phone details
 
 const phoneDetails = (datas) => {
     // console.log(datas)
@@ -61,27 +66,43 @@ const phoneDetails = (datas) => {
 const showPhoneDetails = (data) => {
     // console.log(data)
     const setPhoneDetails = document.getElementById("details");
-    setPhoneDetails.textContent='';
+    setPhoneDetails.textContent = "";
 
     const div = document.createElement("div");
-    
+
     //   img.innerText=${data.image}
     div.innerHTML = `
-    <div class="card">
+    <div class="card ps-5">
               <div class="text-center">
-              <img  class="img-thumbnail w-25 h-25 mb-5" src="${data.image}" class="card-img-top" alt="...">
+              <img  class="img-thumbnail w-10 h-10 mb-5" src="${data.image}" class="card-img-top" alt="...">
               </div>
+              <p><span class="fs-5 text fw-bold">Release Date: </span> ${data.mainFeatures.releaseDate ? data.mainFeatures.releaseDate : 'comming soon'} </p>
               
-
+              <div>
+              <h3> Main Features: </h3>
+              <ul>
+              <li> <span class="fs-5 text fw-bold">Storage: </span> ${data.mainFeatures.storage}</li>
+              <li><span class="fs-5 text fw-bold">Display Size: </span>  ${data.mainFeatures.displaySize}</li>
+              <li><span class="fs-5 text fw-bold">ChipSet: </span> ${data.mainFeatures.chipSet}</li>
+              <li><span class="fs-5 text fw-bold">Memory: </span> ${data.mainFeatures.memory}</li>
               
-            
-           
-            </div>
+              </ul>
+              
+         
+              </div>
+              <p><span class="fs-5 text fw-bold">Sensors: </span> ${data.mainFeatures.sensors ? data.mainFeatures.sensors : 'comming soon'} </p>
+              
+       </div>
 
-`
-
-
+`;
 
     setPhoneDetails.appendChild(div);
-    
-}
+};
+
+// sipper
+const toggleSpinner = (displayStyle) => {
+    document.getElementById("spinner").style.display = displayStyle;
+};
+const toggleSearchList = (displayStyle) => {
+    document.getElementById("phoneList").style.display = displayStyle;
+};
